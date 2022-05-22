@@ -14,8 +14,7 @@ fs.readdir(secretFolderPath, {
         const fileName = file.name.match(/.*(?=\.)/)[0];
 
         fs.stat(filePath).then(stats => {
-          const sizeInKb = Math.ceil(stats.size / 1024);
-          stdout.write(`${fileName} - ${fileExtension} - ${sizeInKb}kb \n`);
+          stdout.write(`${fileName} - ${fileExtension} - ${stats.size}b \n`);
         });
       } 
     });
