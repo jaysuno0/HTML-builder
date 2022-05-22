@@ -17,16 +17,18 @@ fsPromises.readdir(stylesFolderPath)
 
     (function streamToBundle(){
       count++;
-      if (count < files.length && path.extname(files[count]) === '.css') {
-        const readStream = fs.createReadStream(path.join(stylesFolderPath, files[count]));
+      if (count < files.length) {
+        if (path.extname(files[count]) === '.css') {
+          const readStream = fs.createReadStream(path.join(stylesFolderPath, files[count]));
 
-        readStream.on('data', (chunk) => {
-          fs.appendFile(bundlePath, chunk, (err) => {
-            if (err) throw err;
+          readStream.on('data', (chunk) => {
+            fs.appendFile(bundlePath, chunk, (err) => {
+              if (err) throw err;
+            });
           });
-        });
 
-        readStream.on('close', streamToBundle);
+          readStream.on('close', streamToBundle);
+        } else streamToBundle();
       }
     })();
   })
